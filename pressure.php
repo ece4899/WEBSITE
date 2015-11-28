@@ -122,10 +122,8 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
     if(mysql_num_rows($checklogin) == 1)
     {
         $row = mysql_fetch_array($checklogin);
-        $email = $row['EmailAddress'];
-         
-        $_SESSION['Username'] = $username;
-        $_SESSION['EmailAddress'] = $email;
+                 
+        $_SESSION['Username'] = $username;       
         $_SESSION['LoggedIn'] = 1;
          
         echo "<h1>Success</h1>";

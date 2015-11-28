@@ -23,19 +23,19 @@ else
 {
     // display the login form
 }
-?>
 
-<?php
-if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
-{
+	if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
+		{
+	// on success
      ?>
  
      <h1>Member Area</h1>
-     <p>Thanks for logging in! You are <code><?=$_SESSION['Username']?></code> and your email address is <code><?=$_SESSION['EmailAddress']?></code>.</p>
+     <p>Thanks for logging in! You are <code><?=$_SESSION['Username']?></code></p>
 	 
 	 <br/>
-	 <a href="graphs.php">TEST graph</a><br/><br/>
-	 <a href="bmp180_graph.php">BMP180</a><br/>
+	 <!--<a href="graphs.php">TEST graph</a><br/><br/>-->
+	 <a href="pressure.php">Pressure</a><br/><br/>
+	 <a href="bmp180_graph.php">Temperature</a><br/>
 	 <br>
 	 	 <!--<a href="csv_graphs.php">CSV graphs</a>-->
 	 
@@ -43,22 +43,20 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 	 <a href="logout.php">log out</a>
       
      <?php
-}
-elseif(!empty($_POST['username']) && !empty($_POST['password']))
-{
-    $username = mysql_real_escape_string($_POST['username']);
-    $password = md5(mysql_real_escape_string($_POST['password']));
+	}
+		elseif(!empty($_POST['username']) && !empty($_POST['password']))
+			{
+			$username = mysql_real_escape_string($_POST['username']);
+			$password = md5(mysql_real_escape_string($_POST['password']));
      
-    $checklogin = mysql_query("SELECT * FROM users WHERE Username = '".$username."' AND Password = '".$password."'");
-     
-    //if(mysql_num_rows($checklogin) == 1)
-	if(mysql_num_rows($checklogin) == 0)	
+			$checklogin = mysql_query("SELECT * FROM users WHERE Username = '".$username."' AND Password = '".$password."'");
+    
+			if(mysql_num_rows($checklogin) == 1)
+	
     {
         $row = mysql_fetch_array($checklogin);
-        $email = $row['EmailAddress'];
-         
-        $_SESSION['Username'] = $username;
-        $_SESSION['EmailAddress'] = $email;
+                 
+        $_SESSION['Username'] = $username;        
         $_SESSION['LoggedIn'] = 1;
          
         //echo "<h1>Success</h1>";
@@ -67,7 +65,7 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
 		
 		?>
 		<h1>Member Area</h1>
-     <p>Thanks for logging in! You are <code><?=$_SESSION['Username']?></code> and your email address is <code><?=$_SESSION['EmailAddress']?></code>.</p>
+		<p>Thanks for logging in! You are <code><?=$_SESSION['Username']?></code></p>
 	 
 	 <br>
 	 <a href="graphs.php">Test Graph</a><br>
@@ -89,19 +87,19 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
 else
 {
     ?>
-     
+    <center> 
    <h1>Member Login</h1>
      
-   <p>Thanks for visiting! Please either login below, or <a href="register.php">click here to register</a>.</p>
+   <p>To view sensor data! Please either login below, or <a href="register.php">click here to register</a>.</p>
      
     <form method="post" action="index.php" name="loginform" id="loginform">
     <fieldset>
         <label for="username">Username:</label><input type="text" name="username" id="username" /><br />
-        <label for="password">Password:</label><input type="password" name="password" id="password" /><br />
-        <input type="submit" name="login" id="login" value="Login" />
+        <label for="password">Password: </label><input type="password" name="password" id="password" /><br />
+        <center><input type="submit" name="login" id="login" value="Login" /></center>
     </fieldset>
     </form>
-     
+    </center> 
    <?php
 }
 ?>

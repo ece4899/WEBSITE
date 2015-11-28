@@ -13,7 +13,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
 {
     $username = mysql_real_escape_string($_POST['username']);
     $password = md5(mysql_real_escape_string($_POST['password']));
-    $email = mysql_real_escape_string($_POST['email']);
+    
      
      $checkusername = mysql_query("SELECT * FROM users WHERE Username = '".$username."'");
       
@@ -24,7 +24,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
      }
      else
      {
-        $registerquery = mysql_query("INSERT INTO users (Username, Password, EmailAddress) VALUES('".$username."', '".$password."', '".$email."')");
+        $registerquery = mysql_query("INSERT INTO users (Username, Password) VALUES('".$username."', '".$password."')");
         if($registerquery)
         {
             echo "<h1>Success</h1>";
@@ -49,7 +49,7 @@ else
     <fieldset>
         <label for="username">Username:</label><input type="text" name="username" id="username" /><br />
         <label for="password">Password:</label><input type="password" name="password" id="password" /><br />
-        <label for="email">Email Address:</label><input type="text" name="email" id="email" /><br />
+       
         <input type="submit" name="register" id="register" value="Register" />
     </fieldset>
     </form>

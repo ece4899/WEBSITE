@@ -33,6 +33,14 @@ else
 ?>
 
 <?php
+$sql = 'SELECT * FROM bmp180';
+mysql_select_db('1906630_ece4899');
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+
 if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 {
 	$dServer = array();
@@ -50,11 +58,11 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 		var data = <?php echo json_encode($dServer_D1); ?>;
     $('#container').highcharts({
         title: {
-            text: 'Sensor Logging',
+            text: 'Temperature/2 Minutes',
             x: -20 //center
         },
         subtitle: {
-            text: 'Source: Database',
+            text: 'Source: BMP180',
             x: -20
         },
         xAxis: {
@@ -81,7 +89,7 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
             borderWidth: 0
         },
         series: [{
-            name: 'BMP180',
+            name: 'Temperature',
             data: [<?php echo join($dServer_D1, ','); ?>],
 			pointStart: 0
         }	]
@@ -113,11 +121,9 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
      
     if(mysql_num_rows($checklogin) == 1)
     {
-        $row = mysql_fetch_array($checklogin);
-        $email = $row['EmailAddress'];
+        $row = mysql_fetch_array($checklogin);       
          
-        $_SESSION['Username'] = $username;
-        $_SESSION['EmailAddress'] = $email;
+        $_SESSION['Username'] = $username;       
         $_SESSION['LoggedIn'] = 1;
          
         echo "<h1>Success</h1>";
