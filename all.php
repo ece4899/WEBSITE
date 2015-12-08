@@ -123,7 +123,7 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 							 return this.point.x + ' ' +
                             '<span style="color:blue;font-weight:bold;">' + this.series.name + '</span><br />' +
                             '<span style="color:blue;font-weight:bold;">' + date[this.point.x] + '</span><br />' +
-                            '<span style="color:red;font-weight:normal;">' + 'Sound: </span><span style="font-weight:800;">' + this.point.y + ' Db</span><br />';	
+                            '<span style="color:red;font-weight:normal;">' + 'Sound: </span><span style="font-weight:800;">' + this.point.y + ' Volts*100</span><br />';	
 							} else if(this.series.name === 'Light'){
 							 return this.point.x + ' ' +
                             '<span style="color:blue;font-weight:bold;">' + this.series.name + '</span><br />' +
