@@ -32,7 +32,7 @@ else
 ?>
 
 <?php
-$sql = 'SELECT * FROM all_graphs';
+$sql = 'SELECT * FROM all_graphs2';
 mysql_select_db('1906630_ece4899');
 $retval = mysql_query( $sql, $conn );
 if(! $retval )
@@ -64,7 +64,7 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
                         zoomType: 'x'
                     },
                                         title: {
-                        text: 'PANDa Logger Room 1'  
+                        text: 'PANDa Logger Room 2'  
                     },
                     subtitle: {
                         text: 'Click and drag in the plot area to zoom in'
@@ -171,9 +171,9 @@ series: [
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 	 
 	 <br>
-	 <a href="index.php">Return to members area</a>
+	 <a href="http://192.168.137.100/index.php">Return to members area</a>
 	 <br>
-	 <a href="logout.php">log out</a>
+	 <a href="http://192.168.137.101/logout.php">log out</a>
       
      <?php
 	//}
