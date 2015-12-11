@@ -1,3 +1,10 @@
+<!--
+Author: David Kalina
+
+For senior seminar PANDa logger project ECE4899 12/11/15
+
+University of Colorado Colorado Springs
+-->
 <?php include "base.php"; ?>
 
 	<!DOCTYPE HTML>
@@ -53,47 +60,77 @@ if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
      ?>
     <script>
 	$(function () {
-		var date = <?php echo json_encode($dServer_date); ?>;
-		var num = <?php echo json_encode($dServer_N1); ?>;
-		var data = <?php echo json_encode($dServer_D1); ?>;
-    $('#container').highcharts({
-        title: {
-            text: 'Temperature/2 Minutes',
-            x: -20 //center
-        },
-        subtitle: {
-            text: 'Source: BMP180',
-            x: -20
-        },
-        xAxis: {
-			categories: date,
-			min: 1
-        },
-        yAxis: {
-            title: {
-                text: 'Temp C'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{
+	var date = <?php echo json_encode($dServer_date); ?>;		
+	var data = <?php echo json_encode($dServer_D1); ?>;	
+    var chart;
+    $(document).ready(function() {
+        chachart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: "container",
+                        type: "spline",
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: 'Temperature/ 2 Minutes'  
+                    },
+                    subtitle: {
+                        text: 'Source: BMP180'
+                    },
+                    plotOptions: {
+                        spline: {
+                            turboThreshold: 10000,
+                            lineWidth: 2,
+                            states: {
+                                hover: {
+                                    enabled: true,
+                                    lineWidth: 3
+                                }
+                            },
+                            marker: {
+                                enabled: false,
+                                states: {
+                                    hover: {
+                                        enabled : true,
+                                        radius: 5,
+                                        lineWidth: 1
+                                    }
+                                }  
+                            }      
+                        }
+                    },
+                    xAxis: {
+						categories: date,						
+                        labels: {
+                            rotation: -45,
+                            align: 'right',
+                            style: "font: 'normal 10px Verdana, sans-serif'"
+                        },
+                        title: {
+                            text: ''
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Temp F'
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {                            
+                            return this.point.x + '  <span style="font-size:75%;">' + date[this.point.x] + '</span><br><span style="font-weight:bold;">Temperature: ' + this.point.y + ' °F</span><br />';
+                        }
+                    },
+                    exporting: {
+                        enabled: true
+                    },
+
+			series: [{
             name: 'Temperature',
             data: [<?php echo join($dServer_D1, ','); ?>],
 			pointStart: 0
         }	]
+        });
     });
+    
 });
 		
 	</script>
@@ -121,8 +158,8 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
      
     if(mysql_num_rows($checklogin) == 1)
     {
-        $row = mysql_fetch_array($checklogin);       
-         
+        $row = mysql_fetch_array($checklogin);
+                 
         $_SESSION['Username'] = $username;       
         $_SESSION['LoggedIn'] = 1;
          
@@ -139,7 +176,7 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
 else
 {
     ?>
-     
+   <center>  
    <h1>Member Login</h1>
      
    <p>Thanks for visiting! Please either login below, or <a href="register.php">click here to register</a>.</p>
@@ -151,7 +188,7 @@ else
         <input type="submit" name="login" id="login" value="Login" />
     </fieldset>
     </form>
-     
+    </center> 
    <?php
 }
 ?>
